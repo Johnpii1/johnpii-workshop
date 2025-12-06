@@ -41,9 +41,54 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-
-  
   
 
+let currentPage = 1;
+let lastPage = 20; // change to your total pages
 
+function renderPages() {
+  const pages = document.getElementById("pages");
 
+  // calculate the 3 numbers to show
+  let start = currentPage - 1;
+  let end = currentPage + 1;
+
+  // fix beginning
+  if (currentPage === 1) {
+    start = 1;
+    end = 3;
+  }
+  if (currentPage === 2) {
+    start = 1;
+    end = 3;
+  }
+
+  // fix ending
+  if (currentPage === lastPage) {
+    start = lastPage - 2;
+    end = lastPage;
+  }
+  if (currentPage === lastPage - 1) {
+    start = lastPage - 2;
+    end = lastPage;
+  }
+
+  // render
+  pages.innerHTML = "";
+
+  for (let i = start; i <= end; i++) {
+    pages.innerHTML += `
+      <button onclick="goToPage(${i})"
+        class="${i === currentPage ? 'border border-orange-500 text-orange-500 font-bold px-3 rounded' : ''}">
+        ${i}
+      </button>
+    `;
+  }
+}
+
+function goToPage(num) {
+  currentPage = num;
+  renderPages();
+}
+
+renderPages();
